@@ -1,15 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:qr_delight/VerifyOtp.dart';
+import 'dart:developer';
 
-class LoginByNumber extends StatefulWidget {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:qr_delight/Menu.dart';
+
+class VerifyOtp extends StatefulWidget {
+  String verificationid;
+  VerifyOtp({super.key, required this.verificationid});
   @override
-  State<LoginByNumber> createState() => _LoginByNumber();
+  State<VerifyOtp> createState() => _VerifyOtp();
 }
 
-class _LoginByNumber extends State<LoginByNumber> {
-  TextEditingController Mobnum = TextEditingController();
+class _VerifyOtp extends State<VerifyOtp> {
+  TextEditingController Otpcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +28,7 @@ class _LoginByNumber extends State<LoginByNumber> {
               //color: Colors.blue,
               image: DecorationImage(
                 image: NetworkImage(
-                    "https://www.foodiesfeed.com/wp-content/uploads/2023/09/pears.jpg"),
+                    "https://images.pexels.com/photos/2090900/pexels-photo-2090900.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -68,12 +71,12 @@ class _LoginByNumber extends State<LoginByNumber> {
                         width: MediaQuery.sizeOf(context).width * 0.8,
                         height: MediaQuery.sizeOf(context).height * 0.08,
                         child: TextFormField(
-                          controller: Mobnum,
-                          keyboardType: TextInputType.number,
+                          controller: Otpcontroller,
+                          keyboardType: TextInputType.phone,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Enter Mobile Number',
+                            labelText: 'Enter Otp',
                             labelStyle: TextStyle(
                               color: Colors.black,
                             ),
@@ -110,6 +113,15 @@ class _LoginByNumber extends State<LoginByNumber> {
                       ),
                     ),
                     SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Resend Otp",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    SizedBox(
                       height: 50,
                     ),
                     ElevatedButton(
@@ -117,21 +129,17 @@ class _LoginByNumber extends State<LoginByNumber> {
                         backgroundColor: Colors.yellow[500],
                       ),
                       onPressed: () async {
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                            verificationCompleted:
-                                (PhoneAuthCredential credential) {
-                              print("verification complete");
-                                },
-                            verificationFailed: (FirebaseAuthException ex) {
-                              print(ex);
-                            },
-                            codeSent:
-                                (String verficationid, int? resendtoken) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>VerifyOtp(verificationid: '$verficationid',)));
-                                },
-                            codeAutoRetrievalTimeout:
-                                (String verificationid) {},
-                            phoneNumber: Mobnum.text.toString());
+                        try {
+                          PhoneAuthCredential credential =
+                              await PhoneAuthProvider.credential(
+                                  verificationId: widget.verificationid,
+                                  smsCode: Otpcontroller.text.toString());
+                          FirebaseAuth.instance.signInWithCredential(credential).then((value){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuList()));
+                          });
+                        } catch (ex) {
+                          log(ex.toString());
+                        }
                       },
                       child: Text(
                         "Verify",
@@ -151,5 +159,3 @@ class _LoginByNumber extends State<LoginByNumber> {
     );
   }
 }
-
-//verify opt

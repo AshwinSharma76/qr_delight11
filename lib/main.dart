@@ -1,10 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_delight/firebase_options.dart';
 
+import 'Additems.dart';
 import 'LoginByNumber.dart';
 import 'Menu.dart';
 import 'Order_now.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -36,7 +42,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
 
       ),
-      home: VerifyOtp(),
+      debugShowCheckedModeBanner: false,
+     // home: FirebaseAuth.instance.currentUser!=null?MenuList():LoginByNumber(),
+      home: Additems(),
     );
   }
 }
