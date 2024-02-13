@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "255436758089",
+    "project_id": "qr-delight-cca5d",
+    "storage_bucket": "qr-delight-cca5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255436758089:android:cdf1071ae8d39b60b07398",
+        "android_client_info": {
+          "package_name": "com.example.qr_delight"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeIGlXGNBCeepZkXs7E901mqs_Rs9IRjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
