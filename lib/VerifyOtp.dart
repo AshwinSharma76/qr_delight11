@@ -2,7 +2,11 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:qr_delight/MenuItems.dart';
+
+
+
 
 
 class VerifyOtp extends StatefulWidget {
@@ -136,7 +140,10 @@ class _VerifyOtp extends State<VerifyOtp> {
                                   verificationId: widget.verificationid,
                                   smsCode: Otpcontroller.text.toString());
                           FirebaseAuth.instance.signInWithCredential(credential).then((value){
+
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuItems()));
+
+
                           });
                         } catch (ex) {
                           log(ex.toString());

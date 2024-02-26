@@ -4,19 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:qr_delight/firebase_options.dart';
 
 import 'Additems.dart';
-import 'ChefView.dart';
 import 'LoginByNumber.dart';
-import 'dart:ui_web' as ui;
-
-import 'MenuItems.dart';
-import 'OrderHistory.dart';
+import 'Menu.dart';
 import 'Order_now.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -48,8 +43,8 @@ class MyApp extends StatelessWidget {
 
       ),
       debugShowCheckedModeBanner: false,
-     ///home: FirebaseAuth.instance.currentUser!=null?MenuItems():LoginByNumber(),
-     home: OrderHistoy(),
+     // home: FirebaseAuth.instance.currentUser!=null?MenuList():LoginByNumber(),
+      home: Additems(),
     );
   }
 }
